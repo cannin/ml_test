@@ -245,7 +245,7 @@ t = torch.rand(5)
 print(t)
 
 t_splits = torch.split(t, split_size_or_sections=[3, 2])
- 
+
 [item.numpy() for item in t_splits]
 
 
@@ -319,7 +319,7 @@ joint_dataset = JointDataset(t_x, t_y)
 joint_dataset = TensorDataset(t_x, t_y)
 
 for example in joint_dataset:
-    print('  x: ', example[0], 
+    print('  x: ', example[0],
           '  y: ', example[1])
 
 
@@ -331,13 +331,13 @@ torch.manual_seed(1)
 data_loader = DataLoader(dataset=joint_dataset, batch_size=2, shuffle=True)
 
 for i, batch in enumerate(data_loader, 1):
-        print(f'batch {i}:', 'x:', batch[0], 
+        print(f'batch {i}:', 'x:', batch[0],
               '\n         y:', batch[1])
-        
+
 for epoch in range(2):
     print(f'epoch {epoch+1}')
     for i, batch in enumerate(data_loader, 1):
-        print(f'batch {i}:', 'x:', batch[0], 
+        print(f'batch {i}:', 'x:', batch[0],
               '\n         y:', batch[1])
 
 
@@ -365,7 +365,7 @@ for i, file in enumerate(file_list):
     ax.set_xticks([]); ax.set_yticks([])
     ax.imshow(img)
     ax.set_title(os.path.basename(file), size=15)
-    
+
 #plt.savefig('figures/12_03.pdf')
 plt.tight_layout()
 plt.show()
@@ -386,13 +386,13 @@ class ImageDataset(Dataset):
         self.labels = labels
 
     def __getitem__(self, index):
-        file = self.file_list[index]      
+        file = self.file_list[index]
         label = self.labels[index]
         return file, label
 
     def __len__(self):
         return len(self.labels)
-    
+
 image_dataset = ImageDataset(file_list, labels)
 for file, label in image_dataset:
     print(file, label)
@@ -407,7 +407,7 @@ class ImageDataset(Dataset):
         self.labels = labels
         self.transform = transform
     def __getitem__(self, index):
-        img = Image.open(self.file_list[index])        
+        img = Image.open(self.file_list[index])
         if self.transform is not None:
             img = self.transform(img)
         label = self.labels[index]
@@ -416,12 +416,12 @@ class ImageDataset(Dataset):
         return len(self.labels)
 
 img_height, img_width = 80, 120
-    
+
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Resize((img_height, img_width)),
 ])
-    
+
 image_dataset = ImageDataset(file_list, labels, transform)
 
 
@@ -433,7 +433,7 @@ for i, example in enumerate(image_dataset):
     ax.set_xticks([]); ax.set_yticks([])
     ax.imshow(example[0].numpy().transpose((1, 2, 0)))
     ax.set_title(f'{example[1]}', size=15)
-    
+
 plt.tight_layout()
 plt.savefig('figures/12_04.pdf')
 plt.show()
@@ -501,7 +501,8 @@ IPythonImage(filename='figures/celeba-files.png', width=400)
 
 
 image_path = './'
-celeba_dataset = torchvision.datasets.CelebA(image_path, split='train', target_type='attr', download=False)
+# Downloaded from https://drive.google.com/file/d/1m8-EBPgi5MRubrm6iQjafK2QMHDBMSfJ/view?usp=share_link based on https://github.com/rasbt/machine-learning-book/issues/146
+celeba_dataset = torchvision.datasets.CelebA(image_path, split='train', target_type='attr', download=True)
 
 assert isinstance(celeba_dataset, torch.utils.data.Dataset)
 
@@ -520,7 +521,7 @@ for i, (image, attributes) in islice(enumerate(celeba_dataset), 18):
     ax.set_xticks([]); ax.set_yticks([])
     ax.imshow(image)
     ax.set_title(f'{attributes[31]}', size=15)
-    
+
 #plt.savefig('figures/12_05.pdf')
 plt.show()
 

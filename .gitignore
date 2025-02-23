@@ -39,3 +39,6 @@ doc/_build
 
 # Other
 .python-version
+/ch15/.data
+notes.txt
+/ch13/MNIST
